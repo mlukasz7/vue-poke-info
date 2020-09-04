@@ -4,16 +4,19 @@
       title="Vue Poke Info"
       subtitle="Get pokemon data. Data based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
     />
+    <SearchBox />
   </div>
 </template>
 
 <script>
 import Hello from "./components/Hello.vue";
+import SearchBox from "./components/SearchBox";
 
 export default {
   name: "App",
   components: {
-    Hello
+    Hello,
+    SearchBox
   }
 };
 </script>
