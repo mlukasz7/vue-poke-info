@@ -2,8 +2,8 @@
   <section>
     <SearchBox />
     <SwitchButton @onChange="onHandlePokeViewChange" />
-    <PokeTiles v-if="pokeView === 0" :pokemons="pokemons" />
-    <PokeListTable v-if="pokeView === 1" :pokemons="pokemons" />
+    <PokeTiles v-if="pokeView === 0" :pokemons="loadedPokemons" />
+    <PokeListTable v-if="pokeView === 1" :pokemons="loadedPokemons" />
     <Button text="Load more" v-if="canLoadMore" @onClick="loadMore" />
   </section>
 </template>
@@ -19,6 +19,8 @@ import SwitchButton from "../SwitchButton";
 
 import { PokeApi } from "../../utilities/PokeApi";
 
+const POKEMON_PER_VIEW = 40;
+
 @Component({
   components: {
     Button,
@@ -30,6 +32,10 @@ import { PokeApi } from "../../utilities/PokeApi";
 })
 class PokeSearchAndResults extends Vue {
   canLoadMore = false;
+
+  loadedPokemons = [];
+
+  lodaedViews = 0;
 
   pokemons = [];
 
@@ -46,18 +52,21 @@ class PokeSearchAndResults extends Vue {
 
   async mounted() {
     const res = await this.api.getPokemons();
-    this.canLoadMore = Boolean(res.next);
     this.pokemons = res && res.results ? res.results : [];
+    this.loadedPokemons = this.pokemons.slice(0, POKEMON_PER_VIEW);
+
+    this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
+    this.lodaedViews += 1;
   }
 
   async loadMore() {
-    const offset = this.pokemons.length;
-    const res = await this.api.getPokemons(offset);
+    this.loadedPokemons = this.pokemons.slice(
+      0,
+      POKEMON_PER_VIEW * (this.lodaedViews + 1)
+    );
+    this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
 
-    if (res && res.results) {
-      this.canLoadMore = Boolean(res.next);
-      this.pokemons = [...this.pokemons, ...res.results];
-    }
+    this.lodaedViews += 1;
   }
 
   onHandlePokeViewChange(mode) {
