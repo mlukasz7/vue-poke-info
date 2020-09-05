@@ -21,7 +21,7 @@ class SearchBox extends Vue {
   query = "";
 
   submit() {
-    console.log(this.query);
+    this.$emit("onSearch", this.query);
   }
 }
 

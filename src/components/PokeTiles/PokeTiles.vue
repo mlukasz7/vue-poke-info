@@ -2,12 +2,12 @@
   <section class="poke-tiles">
     <button
       class="poke-tiles__tile"
-      v-for="(pokemon, index) of pokemons"
+      v-for="pokemon of pokemons"
       :key="pokemon.name"
     >
-      <img :src="getImageSrc(index)" alt />
+      <img :src="getImageSrc(pokemon.id)" alt />
       <h2 class="poke-tiles__name">{{ pokemon.name }}</h2>
-      <span class="poke-tiles__id">{{ index + 1 }}</span>
+      <span class="poke-tiles__id">{{ pokemon.id }}</span>
     </button>
   </section>
 </template>
@@ -19,9 +19,8 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 class PokeTiles extends Vue {
   @Prop({ type: Array, default: [] }) pokemons;
 
-  getImageSrc(index) {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index +
-      1}.png`;
+  getImageSrc(id) {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
   }
 }
 

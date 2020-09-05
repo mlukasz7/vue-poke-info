@@ -1,6 +1,6 @@
 <template>
   <section>
-    <SearchBox />
+    <SearchBox @onSearch="handleOnSearch" />
     <SwitchButton @onChange="onHandlePokeViewChange" />
     <PokeTiles v-if="pokeView === 0" :pokemons="loadedPokemons" />
     <PokeListTable v-if="pokeView === 1" :pokemons="loadedPokemons" />
@@ -52,7 +52,16 @@ class PokeSearchAndResults extends Vue {
 
   async mounted() {
     const res = await this.api.getPokemons();
-    this.pokemons = res && res.results ? res.results : [];
+    let results = res && res.results ? res.results : [];
+
+    results = results.map(el => ({
+      ...el,
+      id: el.url
+        .replace("https://pokeapi.co/api/v2/pokemon/", "")
+        .replace("/", "")
+    }));
+
+    this.pokemons = results;
     this.loadedPokemons = this.pokemons.slice(0, POKEMON_PER_VIEW);
 
     this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
@@ -65,6 +74,16 @@ class PokeSearchAndResults extends Vue {
       POKEMON_PER_VIEW * (this.lodaedViews + 1)
     );
     this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
+
+    this.lodaedViews += 1;
+  }
+
+  handleOnSearch(query) {
+    this.lodaedViews = 0;
+
+    this.loadedPokemons = this.pokemons
+      .filter(pokemon => pokemon.name.includes(query))
+      .slice(0, POKEMON_PER_VIEW * (this.lodaedViews + 1));
 
     this.lodaedViews += 1;
   }
