@@ -5,9 +5,9 @@
       subtitle="Get pokemon data. Data based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
     />
     <SearchBox />
-    <SwitchButton />
-    <!-- <PokeTiles :pokemons="pokemons" /> -->
-    <PokeListTable :pokemons="pokemons" />
+    <SwitchButton @onChange="onHandlePokeViewChange" />
+    <PokeTiles v-if="pokeView === 0" :pokemons="pokemons" />
+    <PokeListTable v-if="pokeView === 1" :pokemons="pokemons" />
   </div>
 </template>
 
@@ -43,6 +43,13 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 class App extends Vue {
   pokemons = [];
 
+  pokeViewStates = {
+    list: 0,
+    table: 1
+  };
+
+  pokeView = 0;
+
   created() {
     this.api = new PokeApi();
   }
@@ -50,6 +57,10 @@ class App extends Vue {
   async mounted() {
     const res = await this.api.getPokemons();
     this.pokemons = res && res.results ? res.results : [];
+  }
+
+  onHandlePokeViewChange(mode) {
+    this.pokeView = mode;
   }
 }
 

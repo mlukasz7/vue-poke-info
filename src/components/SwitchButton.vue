@@ -30,6 +30,7 @@ class Switch extends Vue {
 
   setActiveBtn(index) {
     this.activeBtn = index;
+    this.$emit("onChange", index);
   }
 }
 
