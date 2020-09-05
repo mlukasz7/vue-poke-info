@@ -8,6 +8,7 @@
     <SwitchButton @onChange="onHandlePokeViewChange" />
     <PokeTiles v-if="pokeView === 0" :pokemons="pokemons" />
     <PokeListTable v-if="pokeView === 1" :pokemons="pokemons" />
+    <Button text="Load more" v-if="canLoadMore" @onClick="loadMore" />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faAlignJustify, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+import Button from "./components/Button";
 import Hello from "./components/Hello.vue";
 import PokeListTable from "./components/PokeListTable/PokeListTable";
 import PokeTiles from "./components/PokeTiles/PokeTiles";
@@ -33,6 +35,7 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 @Component({
   components: {
+    Button,
     Hello,
     PokeListTable,
     PokeTiles,
@@ -41,6 +44,8 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
   }
 })
 class App extends Vue {
+  canLoadMore = false;
+
   pokemons = [];
 
   pokeViewStates = {
@@ -56,7 +61,18 @@ class App extends Vue {
 
   async mounted() {
     const res = await this.api.getPokemons();
+    this.canLoadMore = Boolean(res.next);
     this.pokemons = res && res.results ? res.results : [];
+  }
+
+  async loadMore() {
+    const offset = this.pokemons.length;
+    const res = await this.api.getPokemons(offset);
+
+    if (res && res.results) {
+      this.canLoadMore = Boolean(res.next);
+      this.pokemons = [...this.pokemons, ...res.results];
+    }
   }
 
   onHandlePokeViewChange(mode) {

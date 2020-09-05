@@ -1,5 +1,5 @@
 <template>
-  <button class="poke-button">{{ text }}</button>
+  <button class="poke-button" @click="$emit('onClick')">{{ text }}</button>
 </template>
 
 <script>

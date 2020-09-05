@@ -7,7 +7,7 @@
     >
       <img :src="getImageSrc(index)" alt />
       <h2 class="poke-tiles__name">{{ pokemon.name }}</h2>
-      <span class="poke-tiles__id">{{ index }}</span>
+      <span class="poke-tiles__id">{{ index + 1 }}</span>
     </button>
   </section>
 </template>
@@ -61,6 +61,8 @@ export default PokeTiles;
       display: block;
       width: 80%;
       margin: 0 auto 10px;
+      width: 180px;
+      height: 180px;
     }
   }
 

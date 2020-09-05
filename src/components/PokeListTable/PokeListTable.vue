@@ -14,6 +14,7 @@
           :key="column.field"
           :class="column.classes"
         >
+          <span v-if="column.field === 'id'">{{ index + 1 }}</span>
           <img v-if="column.field === 'sprite'" :src="getImageSrc(index)" alt />
           {{ pokemon[column.field] }}
           <button v-if="column.field === 'cta'">more info</button>
@@ -34,6 +35,7 @@ class PokeListTable extends Vue {
   @Prop({ type: Array, default: [] }) pokemons;
 
   columns = [
+    { field: "id", title: "ID" },
     { field: "sprite", title: "Image" },
     { field: "name", title: "Pokemon name" },
     { field: "cta" }
@@ -64,11 +66,20 @@ table {
     text-align: center;
   }
 
+  span {
+    font-weight: bold;
+    color: #3861a8;
+  }
+
   button {
     color: #feca1c;
-    border: 0;
-    border-bottom: 1px solid #feca1c;
+    border: 1px solid transparent;
+    border-bottom-color: #feca1c;
     cursor: pointer;
+
+    &:hover {
+      border-color: #feca1c;
+    }
   }
 }
 </style>
