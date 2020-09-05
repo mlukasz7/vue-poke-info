@@ -6,7 +6,8 @@
     />
     <SearchBox />
     <SwitchButton />
-    <PokeTiles :pokemons="pokemons" />
+    <!-- <PokeTiles :pokemons="pokemons" /> -->
+    <PokeListTable :pokemons="pokemons" />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import { faAlignJustify, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import Hello from "./components/Hello.vue";
+import PokeListTable from "./components/PokeListTable/PokeListTable";
 import PokeTiles from "./components/PokeTiles/PokeTiles";
 import SearchBox from "./components/SearchBox";
 import SwitchButton from "./components/SwitchButton";
@@ -32,6 +34,7 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 @Component({
   components: {
     Hello,
+    PokeListTable,
     PokeTiles,
     SearchBox,
     SwitchButton
