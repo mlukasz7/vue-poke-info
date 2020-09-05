@@ -5,6 +5,7 @@
       subtitle="Get pokemon data. Data based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
     />
     <SearchBox />
+    <SwitchButton />
     <PokeTiles :pokemons="pokemons" />
   </div>
 </template>
@@ -12,17 +13,28 @@
 <script>
 import { Vue, Component } from "vue-property-decorator";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faAlignJustify, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
 import Hello from "./components/Hello.vue";
 import PokeTiles from "./components/PokeTiles/PokeTiles";
 import SearchBox from "./components/SearchBox";
+import SwitchButton from "./components/SwitchButton";
 
 import { PokeApi } from "./utilities/PokeApi";
+
+library.add(faAlignJustify);
+library.add(faSquare);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 @Component({
   components: {
     Hello,
     PokeTiles,
-    SearchBox
+    SearchBox,
+    SwitchButton
   }
 })
 class App extends Vue {

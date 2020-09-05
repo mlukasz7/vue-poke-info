@@ -1,6 +1,10 @@
 <template>
   <section class="poke-tiles">
-    <button class="poke-tiles__tile" v-for="(pokemon, index) of pokemons" :key="pokemon.name">
+    <button
+      class="poke-tiles__tile"
+      v-for="(pokemon, index) of pokemons"
+      :key="pokemon.name"
+    >
       <img :src="getImageSrc(index)" alt />
       <h2 class="poke-tiles__name">{{ pokemon.name }}</h2>
       <span class="poke-tiles__id">{{ index }}</span>
@@ -49,6 +53,7 @@ export default PokeTiles;
 
       .poke-tiles__id {
         color: #feca1c;
+        opacity: 1;
       }
     }
 
@@ -66,7 +71,7 @@ export default PokeTiles;
     font-size: 2rem;
     font-weight: bold;
     color: #3861a8;
-    transition: color 0.3s ease-in-out;
+    opacity: 0.3;
   }
 
   &__name {
