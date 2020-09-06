@@ -4,7 +4,9 @@
       title="Vue Poke Info"
       subtitle="Get pokemon data. Data based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
     />
-    <PokeSearchAndResults />
+    <!-- <PokeList /> -->
+    <!-- <PokeDetails /> -->
+    <router-view />
   </div>
 </template>
 
@@ -20,7 +22,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import Hello from "./components/Hello.vue";
-import PokeSearchAndResults from "./components/PokeSearchAndResults/PokeSearchAndResults";
+
+import PokeDetails from "./pages/PokeDetails/PokeDetails";
+import PokeList from "./pages/PokeList/PokeList";
 
 library.add(faAlignJustify);
 library.add(faCheckSquare);
@@ -31,7 +35,8 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 @Component({
   components: {
     Hello,
-    PokeSearchAndResults
+    PokeDetails,
+    PokeList
   }
 })
 class App extends Vue {}

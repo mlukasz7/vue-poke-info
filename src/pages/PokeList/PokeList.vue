@@ -11,11 +11,11 @@
 <script>
 import { Vue, Component } from "vue-property-decorator";
 
-import Button from "../Button";
-import PokeListTable from "../PokeListTable/PokeListTable";
-import PokeTiles from "../PokeTiles/PokeTiles";
-import SearchBox from "../SearchBox";
-import SwitchButton from "../SwitchButton";
+import Button from "../../components/Button";
+import PokeListTable from "../../components/PokeListTable/PokeListTable";
+import PokeTiles from "../../components/PokeTiles/PokeTiles";
+import SearchBox from "../../components/SearchBox";
+import SwitchButton from "../../components/SwitchButton";
 
 import { PokeApi } from "../../utilities/PokeApi";
 
@@ -30,7 +30,7 @@ const POKEMON_PER_VIEW = 40;
     SwitchButton
   }
 })
-class PokeSearchAndResults extends Vue {
+class PokeList extends Vue {
   canLoadMore = false;
 
   loadedPokemons = [];
@@ -101,5 +101,5 @@ class PokeSearchAndResults extends Vue {
   }
 }
 
-export default PokeSearchAndResults;
+export default PokeList;
 </script>

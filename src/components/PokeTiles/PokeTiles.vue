@@ -7,7 +7,7 @@
       :key="pokemon.name"
     >
       <img :src="getImageSrc(pokemon.id)" alt />
-      <h2 class="poke-tiles__name">{{ pokemon.name }}</h2>
+      <h2 class="poke-tiles__name">{{ pokemon.name | uppercase }}</h2>
       <span class="poke-tiles__id">{{ pokemon.id }}</span>
       <button
         class="poke-tiles__check"
@@ -25,7 +25,13 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 
 import { PokeColletion } from "../../utilities/PokeCollection";
 
-@Component()
+@Component({
+  filters: {
+    uppercase(value) {
+      return value.toUpperCase();
+    }
+  }
+})
 class PokeTiles extends Vue {
   @Prop({ type: Array, default: [] }) pokemons;
 
