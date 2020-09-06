@@ -21,7 +21,17 @@
             alt
           />
           <p v-if="column.field === 'name'">{{ pokemon[column.field] }}</p>
-          <button v-if="column.field === 'cta'">more info</button>
+          <button
+            v-if="column.field === 'collected'"
+            class="button-collected"
+            :class="{ active: collectedPokemons.includes(pokemon.id) }"
+            @click="toggleCollectPokemon(pokemon.id)"
+          >
+            <font-awesome-icon icon="check-square" />
+          </button>
+          <button v-if="column.field === 'cta'" class="button-cta">
+            more info
+          </button>
         </td>
       </tr>
       <tr v-if="!pokemons.length">
@@ -34,16 +44,35 @@
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
 
+import { PokeColletion } from "../../utilities/PokeCollection";
+
 @Component()
 class PokeListTable extends Vue {
   @Prop({ type: Array, default: [] }) pokemons;
 
+  collectedPokemons = [];
+
   columns = [
     { field: "id", title: "ID" },
     { field: "sprite", title: "Image" },
-    { field: "name", title: "Pokemon name" },
+    { field: "name", title: "Name" },
+    { field: "collected", title: "Collected" },
     { field: "cta" }
   ];
+
+  created() {
+    this.pokeCollection = new PokeColletion();
+    this.collectedPokemons = this.pokeCollection.collectedPokemons;
+  }
+
+  toggleCollectPokemon(id) {
+    if (this.collectedPokemons.includes(id)) {
+      this.pokeCollection.removePokemon(id);
+    } else {
+      this.pokeCollection.addPokemon(id);
+    }
+    this.collectedPokemons = this.pokeCollection.collectedPokemons;
+  }
 
   getImageSrc(id) {
     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
@@ -74,7 +103,7 @@ table {
     color: #3861a8;
   }
 
-  button {
+  .button-cta {
     color: #feca1c;
     border: 1px solid transparent;
     border-bottom-color: #feca1c;
@@ -82,6 +111,26 @@ table {
 
     &:hover {
       border-color: #feca1c;
+    }
+  }
+
+  .button-collected {
+    font-size: 1.2rem;
+    color: #3861a8;
+    opacity: 0.1;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.active {
+      color: greenyellow;
+      opacity: 1;
     }
   }
 }
