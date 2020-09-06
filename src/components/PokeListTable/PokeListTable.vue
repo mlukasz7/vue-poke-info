@@ -29,9 +29,14 @@
           >
             <font-awesome-icon icon="check-square" />
           </button>
-          <button v-if="column.field === 'cta'" class="button-cta">
+          <router-link
+            class="button-cta"
+            tag="button"
+            :to="{ path: `details/${pokemon.id}` }"
+            v-if="column.field === 'cta'"
+          >
             more info
-          </button>
+          </router-link>
         </td>
       </tr>
       <tr v-if="!pokemons.length">
@@ -112,6 +117,11 @@ table {
     &:hover {
       border-color: #feca1c;
     }
+  }
+
+  img {
+    width: 96px;
+    height: 96px;
   }
 
   .button-collected {

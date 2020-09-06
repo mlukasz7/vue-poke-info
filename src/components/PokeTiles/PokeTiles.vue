@@ -1,7 +1,7 @@
 <template>
   <section class="poke-tiles">
     <p v-if="!pokemons.length">No data</p>
-    <button
+    <div
       class="poke-tiles__tile"
       v-for="pokemon of pokemons"
       :key="pokemon.name"
@@ -9,6 +9,13 @@
       <img :src="getImageSrc(pokemon.id)" alt />
       <h2 class="poke-tiles__name">{{ pokemon.name | uppercase }}</h2>
       <span class="poke-tiles__id">{{ pokemon.id }}</span>
+      <router-link
+        class="poke-tiles__cta"
+        tag="button"
+        :to="{ path: `details/${pokemon.id}` }"
+      >
+        More info
+      </router-link>
       <button
         class="poke-tiles__check"
         :class="{ active: collectedPokemons.includes(pokemon.id) }"
@@ -16,7 +23,7 @@
       >
         <font-awesome-icon icon="check-square" />
       </button>
-    </button>
+    </div>
   </section>
 </template>
 
@@ -77,13 +84,9 @@ export default PokeTiles;
     border-radius: 6px;
     margin-bottom: 40px;
     transition: border 0.3s ease-in-out;
-    cursor: pointer;
 
     &:hover {
-      border-color: #feca1c;
-
-      .poke-tiles__id {
-        color: #feca1c;
+      .poke-tiles__cta {
         opacity: 1;
       }
     }
@@ -95,6 +98,17 @@ export default PokeTiles;
       width: 180px;
       height: 180px;
     }
+  }
+
+  &__cta {
+    color: #feca1c;
+    padding-bottom: 10px;
+    background: transparent;
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
   }
 
   &__id {

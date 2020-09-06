@@ -10,12 +10,12 @@ const router = new Router({
   mode: "history",
   routes: [
     {
-      path: "/list",
+      path: "/",
       name: "list",
       component: PokeList
     },
     {
-      path: "/details",
+      path: "/details/:id",
       name: "details",
       component: PokeDetails
     }

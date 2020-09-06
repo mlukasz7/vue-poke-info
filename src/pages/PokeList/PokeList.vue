@@ -1,10 +1,14 @@
 <template>
   <section>
     <SearchBox @onSearch="handleOnSearch" />
-    <SwitchButton @onChange="onHandlePokeViewChange" />
+    <div class="container align-right">
+      <SwitchButton @onChange="onHandlePokeViewChange" />
+    </div>
     <PokeTiles v-if="pokeView === 0" :pokemons="loadedPokemons" />
     <PokeListTable v-if="pokeView === 1" :pokemons="loadedPokemons" />
-    <Button text="Load more" v-if="canLoadMore" @onClick="loadMore" />
+    <div class="container align-center">
+      <Button text="Load more" v-if="canLoadMore" @onClick="loadMore" />
+    </div>
   </section>
 </template>
 
@@ -103,3 +107,18 @@ class PokeList extends Vue {
 
 export default PokeList;
 </script>
+
+<style lang="scss">
+.container {
+  width: 1200px;
+  margin: 0 auto 20px;
+
+  &.align-center {
+    text-align: center;
+  }
+
+  &.align-right {
+    text-align: right;
+  }
+}
+</style>
