@@ -8,15 +8,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(pokemon, index) of pokemons" :key="pokemon.id">
+      <tr v-for="pokemon of pokemons" :key="pokemon.id">
         <td
           v-for="column of columns"
           :key="column.field"
           :class="column.classes"
         >
-          <span v-if="column.field === 'id'">{{ index + 1 }}</span>
-          <img v-if="column.field === 'sprite'" :src="getImageSrc(index)" alt />
-          {{ pokemon[column.field] }}
+          <span v-if="column.field === 'id'">{{ pokemon.id }}</span>
+          <img
+            v-if="column.field === 'sprite'"
+            :src="getImageSrc(pokemon.id)"
+            alt
+          />
+          <p v-if="column.field === 'name'">{{ pokemon[column.field] }}</p>
           <button v-if="column.field === 'cta'">more info</button>
         </td>
       </tr>
@@ -41,9 +45,8 @@ class PokeListTable extends Vue {
     { field: "cta" }
   ];
 
-  getImageSrc(index) {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index +
-      1}.png`;
+  getImageSrc(id) {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
   }
 }
 

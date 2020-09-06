@@ -46,6 +46,8 @@ class PokeSearchAndResults extends Vue {
 
   pokeView = 0;
 
+  query = "";
+
   created() {
     this.api = new PokeApi();
   }
@@ -69,21 +71,27 @@ class PokeSearchAndResults extends Vue {
   }
 
   async loadMore() {
-    this.loadedPokemons = this.pokemons.slice(
-      0,
-      POKEMON_PER_VIEW * (this.lodaedViews + 1)
-    );
-    this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
-
-    this.lodaedViews += 1;
+    this.searchData();
   }
 
   handleOnSearch(query) {
+    this.query = query;
+
     this.lodaedViews = 0;
 
+    this.searchData();
+  }
+
+  searchData() {
     this.loadedPokemons = this.pokemons
-      .filter(pokemon => pokemon.name.includes(query))
+      .filter(pokemon => pokemon.name.includes(this.query))
       .slice(0, POKEMON_PER_VIEW * (this.lodaedViews + 1));
+
+    const filteredAllPokemons = this.pokemons.filter(pokemon =>
+      pokemon.name.includes(this.query)
+    );
+
+    this.canLoadMore = this.loadedPokemons.length < filteredAllPokemons.length;
 
     this.lodaedViews += 1;
   }

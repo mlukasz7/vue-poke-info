@@ -12,13 +12,18 @@
 import { Vue, Component } from "vue-property-decorator";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faAlignJustify, faSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAlignJustify,
+  faCheckSquare,
+  faSquare
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import Hello from "./components/Hello.vue";
 import PokeSearchAndResults from "./components/PokeSearchAndResults/PokeSearchAndResults";
 
 library.add(faAlignJustify);
+library.add(faCheckSquare);
 library.add(faSquare);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
