@@ -2,15 +2,15 @@
   <div class="switch-button">
     <button
       class="switch-button__half"
-      :class="{ active: getActiveBtn() === 0 }"
-      @click="setActiveBtn(0)"
+      :class="{ active: getActiveBtn() === pokeListViews.List }"
+      @click="setActiveBtn(pokeListViews.List)"
     >
       <font-awesome-icon icon="square" />
     </button>
     <button
       class="switch-button__half"
-      :class="{ active: getActiveBtn() === 1 }"
-      @click="setActiveBtn(1)"
+      :class="{ active: getActiveBtn() === pokeListViews.Table }"
+      @click="setActiveBtn(pokeListViews.Table)"
     >
       <font-awesome-icon icon="align-justify" />
     </button>
@@ -20,9 +20,22 @@
 <script>
 import { Vue, Component } from "vue-property-decorator";
 
+import { POKE_LIST_VIEWS } from "../consts/PokeListView";
+
 @Component
 class Switch extends Vue {
-  activeBtn = 0;
+  activeBtn = POKE_LIST_VIEWS.List;
+
+  pokeListViews = POKE_LIST_VIEWS;
+
+  created() {
+    const pokeListViews = localStorage.getItem("pokeListView");
+
+    if (pokeListViews) {
+      this.activeBtn = pokeListViews;
+      this.$emit("onChange", pokeListViews);
+    }
+  }
 
   getActiveBtn() {
     return this.activeBtn;
@@ -31,6 +44,7 @@ class Switch extends Vue {
   setActiveBtn(index) {
     this.activeBtn = index;
     this.$emit("onChange", index);
+    localStorage.setItem("pokeListView", index);
   }
 }
 

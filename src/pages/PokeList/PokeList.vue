@@ -4,8 +4,8 @@
     <div class="container align-right">
       <SwitchButton @onChange="onHandlePokeViewChange" />
     </div>
-    <PokeTiles v-if="pokeView === 0" :pokemons="loadedPokemons" />
-    <PokeListTable v-if="pokeView === 1" :pokemons="loadedPokemons" />
+    <PokeTiles v-if="pokeView === pokeListViews.List" :pokemons="loadedPokemons" />
+    <PokeListTable v-if="pokeView === pokeListViews.Table" :pokemons="loadedPokemons" />
     <div class="container align-center">
       <Button text="Load more" v-if="canLoadMore" @onClick="loadMore" />
     </div>
@@ -22,6 +22,7 @@ import SearchBox from "../../components/SearchBox";
 import SwitchButton from "../../components/SwitchButton";
 
 import { PokeApi } from "../../utilities/PokeApi";
+import { POKE_LIST_VIEWS } from "../../consts/PokeListView";
 
 const POKEMON_PER_VIEW = 40;
 
@@ -43,12 +44,9 @@ class PokeList extends Vue {
 
   pokemons = [];
 
-  pokeViewStates = {
-    list: 0,
-    table: 1
-  };
+  pokeListViews = POKE_LIST_VIEWS;
 
-  pokeView = 0;
+  pokeView = POKE_LIST_VIEWS.List;
 
   query = "";
 
