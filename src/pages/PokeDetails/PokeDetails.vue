@@ -3,9 +3,7 @@
     <header class="poke-data__header">
       <img :src="imageSrc" alt />
       <h1 class="poke-data__name">
-        <span>
-          {{ pokemonId }}
-        </span>
+        <span>{{ pokemonId }}</span>
         | {{ pokemonData.name }}
       </h1>
     </header>
@@ -38,7 +36,6 @@ class PokeDetails extends Vue {
 
   async mounted() {
     const res = await this.api.getPokemon(this.pokemonId);
-    console.log(res);
     this.pokemonData = res;
   }
 }
