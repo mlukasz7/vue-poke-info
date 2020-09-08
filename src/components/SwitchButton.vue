@@ -23,7 +23,7 @@ import { Vue, Component } from "vue-property-decorator";
 import { POKE_LIST_VIEWS } from "../consts/PokeListView";
 
 @Component
-class Switch extends Vue {
+class SwitchButton extends Vue {
   activeBtn = POKE_LIST_VIEWS.List;
 
   pokeListViews = POKE_LIST_VIEWS;
@@ -48,7 +48,7 @@ class Switch extends Vue {
   }
 }
 
-export default Switch;
+export default SwitchButton;
 </script>
 
 <style lang="scss">
@@ -62,6 +62,7 @@ export default Switch;
     padding: 4px 14px;
     font-size: 0.8rem;
     outline: none;
+    background: white;
     cursor: pointer;
 
     &.active {

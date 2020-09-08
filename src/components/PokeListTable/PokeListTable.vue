@@ -34,9 +34,8 @@
             tag="button"
             :to="{ path: `details/${pokemon.id}` }"
             v-if="column.field === 'cta'"
+            >more info</router-link
           >
-            more info
-          </router-link>
         </td>
       </tr>
       <tr v-if="!pokemons.length">
@@ -113,6 +112,7 @@ table {
     border: 1px solid transparent;
     border-bottom-color: #feca1c;
     cursor: pointer;
+    background: transparent;
 
     &:hover {
       border-color: #feca1c;

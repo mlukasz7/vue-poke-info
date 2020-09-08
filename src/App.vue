@@ -15,7 +15,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAlignJustify,
   faCheckSquare,
-  faSquare
+  faSquare,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -24,6 +25,7 @@ import Hello from "./components/Hello.vue";
 library.add(faAlignJustify);
 library.add(faCheckSquare);
 library.add(faSquare);
+library.add(faTimes);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

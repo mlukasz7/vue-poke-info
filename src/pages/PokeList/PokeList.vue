@@ -4,10 +4,16 @@
     <div class="container align-right">
       <SwitchButton @onChange="onHandlePokeViewChange" />
     </div>
-    <PokeTiles v-if="pokeView === pokeListViews.List" :pokemons="loadedPokemons" />
-    <PokeListTable v-if="pokeView === pokeListViews.Table" :pokemons="loadedPokemons" />
+    <PokeTiles
+      v-if="pokeView === pokeListViews.List"
+      :pokemons="loadedPokemons"
+    />
+    <PokeListTable
+      v-if="pokeView === pokeListViews.Table"
+      :pokemons="loadedPokemons"
+    />
     <div class="container align-center">
-      <Button text="Load more" v-if="canLoadMore" @onClick="loadMore" />
+      <Button v-if="canLoadMore" @onClick="loadMore">Load more</Button>
     </div>
   </section>
 </template>

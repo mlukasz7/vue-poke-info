@@ -1,5 +1,7 @@
 <template>
-  <button class="poke-button" @click="$emit('onClick')">{{ text }}</button>
+  <button class="poke-button" :class="classMod" @click="$emit('onClick')">
+    <slot />
+  </button>
 </template>
 
 <script>
@@ -7,7 +9,7 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 
 @Component()
 class Button extends Vue {
-  @Prop({ type: String, required: true }) text;
+  @Prop({ type: String }) classMod;
 }
 
 export default Button;
@@ -21,6 +23,7 @@ export default Button;
   border-radius: 4px;
   font-size: 1rem;
   padding: 10px 20px;
+  outline: none;
   cursor: pointer;
 }
 </style>

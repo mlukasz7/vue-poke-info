@@ -1,12 +1,15 @@
 <template>
-  <form class="search-box" @submit.prevent="submit">
+  <div class="search-box">
     <Input v-model="query" />
-    <Button text="Search" />
-  </form>
+    <Button @onClick="clearInput">
+      <font-awesome-icon icon="times" />
+    </Button>
+  </div>
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
+import { debounce } from "lodash";
 
 import Button from "./Button";
 import Input from "./Form/Input";
@@ -20,8 +23,20 @@ import Input from "./Form/Input";
 class SearchBox extends Vue {
   query = "";
 
-  submit() {
-    this.$emit("onSearch", this.query);
+  created() {
+    this.onSearch = debounce(function(value) {
+      this.$emit("onSearch", value);
+    }, 300);
+  }
+
+  clearInput() {
+    this.query = "";
+    this.onSearch("");
+  }
+
+  @Watch("query")
+  onQueryChange() {
+    this.onSearch(this.query);
   }
 }
 
