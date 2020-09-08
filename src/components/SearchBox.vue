@@ -1,7 +1,7 @@
 <template>
   <div class="search-box">
     <Input v-model="query" />
-    <Button @onClick="clearInput">
+    <Button v-if="query.length" @onClick="clearInput">
       <font-awesome-icon icon="times" />
     </Button>
   </div>
@@ -56,6 +56,9 @@ export default SearchBox;
 
   input {
     border-radius: 4px 0 0 4px;
+    max-width: 547px;
+    outline: none;
+    font-size: 1rem;
   }
 }
 </style>

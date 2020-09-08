@@ -14,6 +14,8 @@ import { Vue, Component } from "vue-property-decorator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAlignJustify,
+  faArrowLeft,
+  faArrowRight,
   faCheckSquare,
   faSquare,
   faTimes
@@ -22,10 +24,14 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import Hello from "./components/Hello.vue";
 
-library.add(faAlignJustify);
-library.add(faCheckSquare);
-library.add(faSquare);
-library.add(faTimes);
+library.add(
+  faAlignJustify,
+  faArrowLeft,
+  faArrowRight,
+  faCheckSquare,
+  faSquare,
+  faTimes
+);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
@@ -56,5 +62,6 @@ export default App;
 
 * {
   font-family: "Roboto";
+  box-sizing: border-box;
 }
 </style>

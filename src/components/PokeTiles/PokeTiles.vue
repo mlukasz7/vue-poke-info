@@ -4,6 +4,7 @@
     <div
       class="poke-tiles__tile"
       v-for="pokemon of pokemons"
+      :class="{ collected: collectedPokemons.includes(pokemon.id) }"
       :key="pokemon.name"
     >
       <img :src="getImageSrc(pokemon.id)" alt />
@@ -18,7 +19,7 @@
       </router-link>
       <button
         class="poke-tiles__check"
-        :class="{ active: collectedPokemons.includes(pokemon.id) }"
+        :class="{ collected: collectedPokemons.includes(pokemon.id) }"
         @click="toggleCollectPokemon(pokemon.id)"
       >
         <font-awesome-icon icon="check-square" />
@@ -91,6 +92,10 @@ export default PokeTiles;
       }
     }
 
+    &.collected {
+      border-color: greenyellow;
+    }
+
     img {
       display: block;
       width: 80%;
@@ -123,7 +128,7 @@ export default PokeTiles;
 
   &__check {
     position: absolute;
-    right: 0;
+    right: 5px;
     bottom: 0;
     font-size: 1.2rem;
     color: #3861a8;
@@ -138,7 +143,7 @@ export default PokeTiles;
       opacity: 1;
     }
 
-    &.active {
+    &.collected {
       color: greenyellow;
       opacity: 1;
     }
