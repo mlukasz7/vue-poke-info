@@ -27,7 +27,6 @@ import PokeTiles from "../../components/PokeTiles/PokeTiles";
 import SearchBox from "../../components/SearchBox";
 import SwitchButton from "../../components/SwitchButton";
 
-import { PokeApi } from "../../utilities/PokeApi";
 import { POKE_LIST_VIEWS } from "../../consts/PokeListView";
 
 const POKEMON_PER_VIEW = 40;
@@ -56,24 +55,12 @@ class PokeList extends Vue {
 
   query = "";
 
-  created() {
-    this.api = new PokeApi();
-  }
-
   async mounted() {
-    const res = await this.api.getPokemons();
-    let results = res && res.results ? res.results : [];
+    await this.$store.dispatch("loadPokemons");
 
-    results = results.map(el => ({
-      ...el,
-      id: el.url
-        .replace("https://pokeapi.co/api/v2/pokemon/", "")
-        .replace("/", "")
-    }));
+    this.pokemons = this.$store.getters.getPokemons;
 
-    this.pokemons = results;
     this.loadedPokemons = this.pokemons.slice(0, POKEMON_PER_VIEW);
-
     this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
     this.lodaedViews += 1;
   }

@@ -4,26 +4,31 @@
     <div
       class="poke-tiles__tile"
       v-for="pokemon of pokemons"
-      :class="{ collected: collectedPokemons.includes(pokemon.id) }"
       :key="pokemon.name"
     >
-      <img :src="getImageSrc(pokemon.id)" alt />
-      <h2 class="poke-tiles__name">{{ pokemon.name | uppercase }}</h2>
-      <span class="poke-tiles__id">{{ pokemon.id }}</span>
+      <div
+        class="poke-tiles__tile-content"
+        :class="{ collected: collectedPokemons.includes(pokemon.id) }"
+      >
+        <img v-lazy="getImageSrc(pokemon.id)" alt />
+        <h2 class="poke-tiles__name">{{ pokemon.name | uppercase }}</h2>
+        <span class="poke-tiles__id">{{ pokemon.id }}</span>
+        <button
+          class="poke-tiles__check"
+          :class="{ collected: collectedPokemons.includes(pokemon.id) }"
+          @click="toggleCollectPokemon(pokemon.id)"
+        >
+          <font-awesome-icon icon="check-square" />
+        </button>
+      </div>
       <router-link
         class="poke-tiles__cta"
         tag="button"
         :to="{ path: `details/${pokemon.id}` }"
+        :class="{ collected: collectedPokemons.includes(pokemon.id) }"
       >
         More info
       </router-link>
-      <button
-        class="poke-tiles__check"
-        :class="{ collected: collectedPokemons.includes(pokemon.id) }"
-        @click="toggleCollectPokemon(pokemon.id)"
-      >
-        <font-awesome-icon icon="check-square" />
-      </button>
     </div>
   </section>
 </template>
@@ -56,6 +61,7 @@ class PokeTiles extends Vue {
     } else {
       this.pokeCollection.addPokemon(id);
     }
+
     this.collectedPokemons = this.pokeCollection.collectedPokemons;
   }
 
@@ -77,20 +83,17 @@ export default PokeTiles;
   padding: 20px;
 
   &__tile {
+    margin-bottom: 40px;
+  }
+
+  &__tile-content {
     position: relative;
     display: block;
     width: 250px;
     font-size: 1rem;
     border: 1px solid #eee;
-    border-radius: 6px;
-    margin-bottom: 40px;
+    border-radius: 6px 6px 0 0;
     transition: border 0.3s ease-in-out;
-
-    &:hover {
-      .poke-tiles__cta {
-        opacity: 1;
-      }
-    }
 
     &.collected {
       border-color: greenyellow;
@@ -107,13 +110,19 @@ export default PokeTiles;
 
   &__cta {
     color: #feca1c;
-    padding-bottom: 10px;
+    padding: 10px;
     background: transparent;
     width: 100%;
     border: 0;
     cursor: pointer;
-    opacity: 0;
     transition: all 0.3s ease-in-out;
+    border: 1px solid #eee;
+    border-top: 0;
+    border-radius: 0 0 6px 6px;
+
+    &.collected {
+      border-color: greenyellow;
+    }
   }
 
   &__id {
