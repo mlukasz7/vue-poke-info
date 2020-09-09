@@ -36,8 +36,6 @@
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
 
-import { PokeColletion } from "../../utilities/PokeCollection";
-
 @Component({
   filters: {
     uppercase(value) {
@@ -48,21 +46,16 @@ import { PokeColletion } from "../../utilities/PokeCollection";
 class PokeTiles extends Vue {
   @Prop({ type: Array, default: [] }) pokemons;
 
-  collectedPokemons = [];
-
-  created() {
-    this.pokeCollection = new PokeColletion();
-    this.collectedPokemons = this.pokeCollection.collectedPokemons;
+  get collectedPokemons() {
+    return this.$store.getters.collectedPokemons;
   }
 
   toggleCollectPokemon(id) {
     if (this.collectedPokemons.includes(id)) {
-      this.pokeCollection.removePokemon(id);
+      this.$store.dispatch("removePokemonToCollection", id);
     } else {
-      this.pokeCollection.addPokemon(id);
+      this.$store.dispatch("addPokemonToCollection", id);
     }
-
-    this.collectedPokemons = this.pokeCollection.collectedPokemons;
   }
 
   getImageSrc(id) {
@@ -77,10 +70,10 @@ export default PokeTiles;
 .poke-tiles {
   max-width: 1200px;
   margin: 40px auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-column-gap: 50px;
+  padding: 20px 0;
 
   &__tile {
     margin-bottom: 40px;
@@ -89,7 +82,6 @@ export default PokeTiles;
   &__tile-content {
     position: relative;
     display: block;
-    width: 250px;
     font-size: 1rem;
     border: 1px solid #eee;
     border-radius: 6px 6px 0 0;

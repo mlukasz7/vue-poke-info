@@ -48,13 +48,13 @@
 <script>
 import { Vue, Component, Prop } from "vue-property-decorator";
 
-import { PokeColletion } from "../../utilities/PokeCollection";
-
 @Component()
 class PokeListTable extends Vue {
   @Prop({ type: Array, default: [] }) pokemons;
 
-  collectedPokemons = [];
+  get collectedPokemons() {
+    return this.$store.getters.collectedPokemons;
+  }
 
   columns = [
     { field: "id", title: "ID" },
@@ -64,18 +64,12 @@ class PokeListTable extends Vue {
     { field: "cta" }
   ];
 
-  created() {
-    this.pokeCollection = new PokeColletion();
-    this.collectedPokemons = this.pokeCollection.collectedPokemons;
-  }
-
   toggleCollectPokemon(id) {
     if (this.collectedPokemons.includes(id)) {
-      this.pokeCollection.removePokemon(id);
+      this.$store.dispatch("removePokemonToCollection", id);
     } else {
-      this.pokeCollection.addPokemon(id);
+      this.$store.dispatch("addPokemonToCollection", id);
     }
-    this.collectedPokemons = this.pokeCollection.collectedPokemons;
   }
 
   getImageSrc(id) {
@@ -88,7 +82,8 @@ export default PokeListTable;
 
 <style lang="scss" scoped>
 table {
-  width: 500px;
+  max-width: 1200px;
+  width: 100%;
   margin: 50px auto;
   border-collapse: collapse;
 

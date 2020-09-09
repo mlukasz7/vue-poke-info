@@ -45,7 +45,7 @@ class PokeList extends Vue {
 
   loadedPokemons = [];
 
-  lodaedViews = 0;
+  loadedViews = 0;
 
   pokemons = [];
 
@@ -55,14 +55,15 @@ class PokeList extends Vue {
 
   query = "";
 
-  async mounted() {
+  async created() {
+    await this.$store.dispatch("loadCollectedPokemons");
     await this.$store.dispatch("loadPokemons");
 
-    this.pokemons = this.$store.getters.getPokemons;
+    this.pokemons = this.$store.getters.pokemons;
 
     this.loadedPokemons = this.pokemons.slice(0, POKEMON_PER_VIEW);
     this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
-    this.lodaedViews += 1;
+    this.loadedViews += 1;
   }
 
   async loadMore() {
@@ -72,7 +73,7 @@ class PokeList extends Vue {
   handleOnSearch(query) {
     this.query = query;
 
-    this.lodaedViews = 0;
+    this.loadedViews = 0;
 
     this.searchData();
   }
@@ -80,7 +81,7 @@ class PokeList extends Vue {
   searchData() {
     this.loadedPokemons = this.pokemons
       .filter(pokemon => pokemon.name.includes(this.query))
-      .slice(0, POKEMON_PER_VIEW * (this.lodaedViews + 1));
+      .slice(0, POKEMON_PER_VIEW * (this.loadedViews + 1));
 
     const filteredAllPokemons = this.pokemons.filter(pokemon =>
       pokemon.name.includes(this.query)
@@ -88,7 +89,7 @@ class PokeList extends Vue {
 
     this.canLoadMore = this.loadedPokemons.length < filteredAllPokemons.length;
 
-    this.lodaedViews += 1;
+    this.loadedViews += 1;
   }
 
   onHandlePokeViewChange(mode) {
