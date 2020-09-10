@@ -67,13 +67,23 @@ export default PokeTiles;
 </script>
 
 <style lang="scss">
+@import "../../App.scss";
+
 .poke-tiles {
   max-width: 1200px;
   margin: 40px auto;
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-column-gap: 50px;
-  padding: 20px 0;
+  padding: 20px;
+
+  @media (min-width: $md-viewport) {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 50px;
+  }
+
+  @media (min-width: $xl-viewport) {
+    grid-template-columns: auto auto auto auto;
+    padding: 20px 0;
+  }
 
   &__tile {
     margin-bottom: 40px;

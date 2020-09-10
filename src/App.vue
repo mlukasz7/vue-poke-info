@@ -60,6 +60,11 @@ export default App;
   font-style: bold;
 }
 
+body {
+  padding: 0;
+  margin: 0;
+}
+
 * {
   font-family: "Roboto";
   box-sizing: border-box;

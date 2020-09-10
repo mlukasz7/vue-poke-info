@@ -40,7 +40,9 @@ class PokeDetails extends Vue {
   columns = [
     { field: "base_experience", title: "Base exp" },
     { field: "height", title: "Height" },
-    { field: "weight", title: "Weight" }
+    { field: "weight", title: "Weight" },
+    { field: "abilities", title: "Abilities" },
+    { field: "forms", title: "Forms" }
   ];
 
   dataLoaded = false;
@@ -61,7 +63,12 @@ class PokeDetails extends Vue {
 
   async mounted() {
     const res = await this.api.getPokemon(this.pokemonId);
+    const abilities = res.abilities.map(ability => ability.ability.name);
+    const forms = res.forms.map(form => form.name);
+
     this.pokemonData = res;
+    this.pokemonData.abilities = abilities.join(", ");
+    this.pokemonData.forms = forms.join(", ");
     this.dataLoaded = true;
   }
 }

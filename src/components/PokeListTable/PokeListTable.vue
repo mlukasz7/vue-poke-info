@@ -17,7 +17,7 @@
           <span v-if="column.field === 'id'">{{ pokemon.id }}</span>
           <img
             v-if="column.field === 'sprite'"
-            :src="getImageSrc(pokemon.id)"
+            v-lazy="getImageSrc(pokemon.id)"
             alt
           />
           <p v-if="column.field === 'name'">{{ pokemon[column.field] }}</p>

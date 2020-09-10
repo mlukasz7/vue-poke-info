@@ -14,7 +14,7 @@
           :key="column.field"
           :class="column.classes"
         >
-          <slot :name="column.field" :row="row" :cell="row[column.field]">
+          <slot :name="column.field">
             {{ row[column.field] }}
           </slot>
         </td>
@@ -38,3 +38,18 @@ class DynamicTable extends Vue {
 
 export default DynamicTable;
 </script>
+
+<style lang="scss" scoped>
+table {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+}
+</style>

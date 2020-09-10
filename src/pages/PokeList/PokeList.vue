@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <main>
     <SearchBox @onSearch="handleOnSearch" />
     <div class="container align-right">
       <SwitchButton @onChange="onHandlePokeViewChange" />
@@ -15,7 +15,7 @@
     <div class="container align-center">
       <Button v-if="canLoadMore" @onClick="loadMore">Load more</Button>
     </div>
-  </section>
+  </main>
 </template>
 
 <script>
@@ -102,8 +102,8 @@ export default PokeList;
 
 <style lang="scss">
 .container {
-  width: 1200px;
-  margin: 0 auto 20px;
+  max-width: 1200px;
+  margin: 20px auto;
 
   &.align-center {
     text-align: center;

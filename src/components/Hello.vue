@@ -6,19 +6,21 @@
 </template>
 
 <script>
-export default {
-  name: "HelloWorld",
-  props: {
-    title: String,
-    subtitle: String
-  }
-};
+import { Vue, Component, Prop } from "vue-property-decorator";
+
+@Component
+class Hello extends Vue {
+  @Prop({ title: String, required: true }) title;
+  @Prop({ title: String }) subtitle;
+}
+
+export default Hello;
 </script>
 
 <style lang="scss">
 .hello {
   margin: 50px auto;
-  width: 600px;
+  max-width: 600px;
   text-align: center;
 
   &__title {
