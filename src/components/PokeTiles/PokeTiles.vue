@@ -111,7 +111,7 @@ export default PokeTiles;
   }
 
   &__cta {
-    color: #feca1c;
+    color: $c-yellow;
     padding: 10px;
     background: transparent;
     width: 100%;
@@ -133,7 +133,7 @@ export default PokeTiles;
     left: 0;
     font-size: 2rem;
     font-weight: bold;
-    color: #3861a8;
+    color: $c-blue;
     opacity: 0.3;
   }
 
@@ -142,7 +142,7 @@ export default PokeTiles;
     right: 5px;
     bottom: 0;
     font-size: 1.2rem;
-    color: #3861a8;
+    color: $c-blue;
     opacity: 0.1;
     border: 0;
     background: transparent;

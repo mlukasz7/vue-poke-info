@@ -17,11 +17,13 @@ export default Anchor;
 </script>
 
 <style lang="scss">
+@import "../App.scss";
+
 .poke-a {
-  color: #feca1c;
+  color: $c-yellow;
   text-decoration: none;
   position: relative;
   padding: 0 2px 3px 2px;
-  border-bottom: 1px solid #feca1c;
+  border-bottom: 1px solid $c-yellow;
 }
 </style>

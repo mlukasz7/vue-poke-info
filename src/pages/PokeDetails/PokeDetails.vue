@@ -1,25 +1,27 @@
 <template>
-  <section class="poke-data" v-show="dataLoaded">
-    <Anchor to="/" class="poke-data__back">
-      <font-awesome-icon icon="arrow-left" />
-      Back
-    </Anchor>
-    <header class="poke-data__header">
-      <img :src="imageSrc" alt />
-      <h1 class="poke-data__name">
-        <span>{{ pokemonId }}</span>
-        | {{ pokemonData.name }}
-      </h1>
-    </header>
-    <section>
-      <h2 class="poke-data__table-h">Poke data:</h2>
-      <DynamicTable
-        class="poke-data__table"
-        :columns="columns"
-        :rows="[pokemonData]"
-      />
+  <div>
+    <section class="poke-data" v-show="dataLoaded">
+      <Anchor to="/" class="poke-data__back">
+        <font-awesome-icon icon="arrow-left" />
+        Back
+      </Anchor>
+      <header class="poke-data__header">
+        <img :src="imageSrc" alt />
+        <h1 class="poke-data__name">
+          <span>{{ pokemonId }}</span>
+          | {{ pokemonData.name }}
+        </h1>
+      </header>
+      <section>
+        <h2 class="poke-data__table-h">Poke data:</h2>
+        <DynamicTable
+          class="poke-data__table"
+          :columns="columns"
+          :rows="[pokemonData]"
+        />
+      </section>
     </section>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -29,11 +31,13 @@ import { PokeApi } from "../../utilities/PokeApi";
 
 import Anchor from "../../components/Anchor";
 import DynamicTable from "../../components/DynamicTable";
+import Hello from "../../components/Hello";
 
 @Component({
   components: {
     Anchor,
-    DynamicTable
+    DynamicTable,
+    Hello
   }
 })
 class PokeDetails extends Vue {
@@ -77,28 +81,36 @@ export default PokeDetails;
 </script>
 
 <style lang="scss">
+@import "../../App.scss";
+
 .poke-data {
   max-width: 1200px;
   margin: 50px auto;
+  padding: 0 20px;
 
   &__header {
     display: flex;
-    align-items: center;
+    flex-direction: column-reverse;
+
+    @media (min-width: $md-viewport) {
+      flex-direction: row;
+      align-items: center;
+    }
   }
 
   &__name {
     font-size: 4rem;
     font-weight: normal;
-    color: #3861a8;
+    color: $c-blue;
 
     span {
-      color: #feca1c;
+      color: $c-yellow;
     }
   }
 
   &__table-h {
     font-weight: normal;
-    color: #3861a8;
+    color: $c-blue;
     margin-bottom: 0.5rem;
   }
 

@@ -1,27 +1,34 @@
 <template>
-  <main>
-    <SearchBox @onSearch="handleOnSearch" />
-    <div class="container align-right">
-      <SwitchButton @onChange="onHandlePokeViewChange" />
-    </div>
-    <PokeTiles
-      v-if="pokeView === pokeListViews.List"
-      :pokemons="loadedPokemons"
+  <div>
+    <Hello
+      title="Vue Poke Info"
+      subtitle="Get pokemon data. Data based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
     />
-    <PokeListTable
-      v-if="pokeView === pokeListViews.Table"
-      :pokemons="loadedPokemons"
-    />
-    <div class="container align-center">
-      <Button v-if="canLoadMore" @onClick="loadMore">Load more</Button>
-    </div>
-  </main>
+    <main>
+      <SearchBox @onSearch="handleOnSearch" />
+      <div class="container align-right">
+        <SwitchButton @onChange="onHandlePokeViewChange" />
+      </div>
+      <PokeTiles
+        v-if="pokeView === pokeListViews.List"
+        :pokemons="loadedPokemons"
+      />
+      <PokeListTable
+        v-if="pokeView === pokeListViews.Table"
+        :pokemons="loadedPokemons"
+      />
+      <div class="container align-center">
+        <Button v-if="canLoadMore" @onClick="loadMore">Load more</Button>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
 import { Vue, Component } from "vue-property-decorator";
 
 import Button from "../../components/Button";
+import Hello from "../../components/Hello";
 import PokeListTable from "../../components/PokeListTable/PokeListTable";
 import PokeTiles from "../../components/PokeTiles/PokeTiles";
 import SearchBox from "../../components/SearchBox";
@@ -34,6 +41,7 @@ const POKEMON_PER_VIEW = 40;
 @Component({
   components: {
     Button,
+    Hello,
     PokeListTable,
     PokeTiles,
     SearchBox,

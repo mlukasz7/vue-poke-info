@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <Hello
-      title="Vue Poke Info"
-      subtitle="Get pokemon data. Data based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
-    />
     <router-view />
   </div>
 </template>
@@ -22,8 +18,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import Hello from "./components/Hello.vue";
-
 library.add(
   faAlignJustify,
   faArrowLeft,
@@ -35,11 +29,7 @@ library.add(
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
-@Component({
-  components: {
-    Hello
-  }
-})
+@Component
 class App extends Vue {}
 
 export default App;

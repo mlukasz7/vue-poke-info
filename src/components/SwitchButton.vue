@@ -52,13 +52,15 @@ export default SwitchButton;
 </script>
 
 <style lang="scss">
+@import "../App.scss";
+
 .switch-button {
   margin-bottom: 0.5rem;
   border: 0;
   padding: 0;
 
   &__half {
-    border: 1px solid #3861a8;
+    border: 1px solid $c-blue;
     padding: 4px 14px;
     font-size: 0.8rem;
     outline: none;
@@ -66,12 +68,12 @@ export default SwitchButton;
     cursor: pointer;
 
     &.active {
-      background: #3861a8;
+      background: $c-blue;
       color: white;
     }
 
     &:hover {
-      box-shadow: 1px 2px 4px 0px #3861a8;
+      box-shadow: 1px 2px 4px 0px $c-blue;
     }
 
     &:nth-of-type(1) {

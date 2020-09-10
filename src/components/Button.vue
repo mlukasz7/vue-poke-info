@@ -16,9 +16,11 @@ export default Button;
 </script>
 
 <style lang="scss">
+@import "../App.scss";
+
 .poke-button {
-  border: 1px solid #3861a8;
-  background: #3861a8;
+  border: 1px solid $c-blue;
+  background: $c-blue;
   color: white;
   border-radius: 4px;
   font-size: 1rem;
