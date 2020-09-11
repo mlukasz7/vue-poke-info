@@ -34,8 +34,9 @@
             tag="button"
             :to="{ path: `details/${pokemon.id}` }"
             v-if="column.field === 'cta'"
-            >more info</router-link
           >
+            more info
+          </router-link>
         </td>
       </tr>
       <tr v-if="!pokemons.length">

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view />
+    <Footer />
   </div>
 </template>
 
@@ -18,6 +19,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+import Footer from "./components/Footer";
+
 library.add(
   faAlignJustify,
   faArrowLeft,
@@ -29,7 +32,11 @@ library.add(
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
-@Component
+@Component({
+  components: {
+    Footer
+  }
+})
 class App extends Vue {}
 
 export default App;

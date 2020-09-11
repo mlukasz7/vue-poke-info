@@ -2,10 +2,10 @@
   <div>
     <Hello
       title="Vue Poke Info"
-      subtitle="Get pokemon data. Data based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
+      subtitle="Get pokemon data app, based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
     />
     <main>
-      <SearchBox @onSearch="handleOnSearch" />
+      <SearchBox @onCollected="onHandleCollected" @onSearch="onHandleSearch" />
       <div class="container align-right">
         <SwitchButton @onChange="onHandlePokeViewChange" />
       </div>
@@ -61,6 +61,8 @@ class PokeList extends Vue {
 
   pokeView = POKE_LIST_VIEWS.List;
 
+  searchCollected = false;
+
   query = "";
 
   async created() {
@@ -75,10 +77,18 @@ class PokeList extends Vue {
   }
 
   async loadMore() {
+    this.searchData(true);
+  }
+
+  onHandleCollected(searchCollected) {
+    this.searchCollected = searchCollected;
+
+    this.loadedViews = 0;
+
     this.searchData();
   }
 
-  handleOnSearch(query) {
+  onHandleSearch(query) {
     this.query = query;
 
     this.loadedViews = 0;
@@ -86,18 +96,30 @@ class PokeList extends Vue {
     this.searchData();
   }
 
-  searchData() {
+  searchData(fromLoadMore = false) {
     this.loadedPokemons = this.pokemons
-      .filter(pokemon => pokemon.name.includes(this.query))
+      .filter(pokemon => {
+        const collectedOrAll = !this.searchCollected
+          ? true
+          : this.$store.getters.collectedPokemons.includes(pokemon.id);
+
+        return pokemon.name.includes(this.query) && collectedOrAll;
+      })
       .slice(0, POKEMON_PER_VIEW * (this.loadedViews + 1));
 
-    const filteredAllPokemons = this.pokemons.filter(pokemon =>
-      pokemon.name.includes(this.query)
-    );
+    const filteredAllPokemons = this.pokemons.filter(pokemon => {
+      const collectedOrAll = !this.searchCollected
+        ? true
+        : this.$store.getters.collectedPokemons.includes(pokemon.id);
+
+      return pokemon.name.includes(this.query) && collectedOrAll;
+    });
 
     this.canLoadMore = this.loadedPokemons.length < filteredAllPokemons.length;
 
-    this.loadedViews += 1;
+    if (fromLoadMore) {
+      this.loadedViews += 1;
+    }
   }
 
   onHandlePokeViewChange(mode) {
