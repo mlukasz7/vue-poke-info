@@ -5,6 +5,7 @@
       subtitle="Get pokemon data app, based at Pokémon API. Pokémon and Pokémon character names are trademarks of Nintendo."
     />
     <main>
+      <Alert classMod="danger" v-if="appError">Error</Alert>
       <SearchBox @onCollected="onHandleCollected" @onSearch="onHandleSearch" />
       <div class="container align-right">
         <SwitchButton @onChange="onHandlePokeViewChange" />
@@ -27,6 +28,7 @@
 <script>
 import { Vue, Component } from "vue-property-decorator";
 
+import Alert from "../../components/Alert";
 import Button from "../../components/Button";
 import Hello from "../../components/Hello";
 import PokeListTable from "../../components/PokeListTable/PokeListTable";
@@ -40,6 +42,7 @@ const POKEMON_PER_VIEW = 40;
 
 @Component({
   components: {
+    Alert,
     Button,
     Hello,
     PokeListTable,
@@ -74,6 +77,10 @@ class PokeList extends Vue {
     this.loadedPokemons = this.pokemons.slice(0, POKEMON_PER_VIEW);
     this.canLoadMore = this.loadedPokemons.length < this.pokemons.length;
     this.loadedViews += 1;
+  }
+
+  get appError() {
+    return this.$store.getters.appError;
   }
 
   async loadMore() {

@@ -7,7 +7,11 @@ export class PokeApi {
   }
 
   async getPokemon(id) {
-    const res = await fetch(`${this.baseUrl}/${id}`);
-    return await res.json();
+    try {
+      const res = await fetch(`${this.baseUrl}/${id}`);
+      return await res.json();
+    } catch (e) {
+      throw new Error();
+    }
   }
 }

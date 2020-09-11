@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Alert classMod="danger" v-if="appError">Error</Alert>
     <section class="poke-data" v-show="dataLoaded">
       <Anchor to="/" class="poke-data__back">
         <font-awesome-icon icon="arrow-left" />
@@ -30,12 +31,14 @@ import { Vue, Component } from "vue-property-decorator";
 import { PokeApi } from "../../utilities/PokeApi";
 
 import Anchor from "../../components/Anchor";
+import Alert from "../../components/Alert";
 import DynamicTable from "../../components/DynamicTable";
 import Hello from "../../components/Hello";
 
 @Component({
   components: {
     Anchor,
+    Alert,
     DynamicTable,
     Hello
   }
@@ -53,6 +56,11 @@ class PokeDetails extends Vue {
 
   pokemonData = {};
 
+  get appError() {
+    console.log(this.$store.getters.appError);
+    return this.$store.getters.appError;
+  }
+
   get pokemonId() {
     return this.$route.params.id;
   }
@@ -66,14 +74,18 @@ class PokeDetails extends Vue {
   }
 
   async mounted() {
-    const res = await this.api.getPokemon(this.pokemonId);
-    const abilities = res.abilities.map(ability => ability.ability.name);
-    const forms = res.forms.map(form => form.name);
+    try {
+      const res = await this.api.getPokemon(this.pokemonId);
+      const abilities = res.abilities.map(ability => ability.ability.name);
+      const forms = res.forms.map(form => form.name);
 
-    this.pokemonData = res;
-    this.pokemonData.abilities = abilities.join(", ");
-    this.pokemonData.forms = forms.join(", ");
-    this.dataLoaded = true;
+      this.pokemonData = res;
+      this.pokemonData.abilities = abilities.join(", ");
+      this.pokemonData.forms = forms.join(", ");
+      this.dataLoaded = true;
+    } catch (e) {
+      this.$store.dispatch("setAppError", true);
+    }
   }
 }
 

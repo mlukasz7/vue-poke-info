@@ -8,10 +8,14 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    appError: false,
     collectedPokemons: [],
     pokemons: []
   },
   getters: {
+    appError: state => {
+      return state.appError;
+    },
     pokemons: state => {
       return state.pokemons;
     },
@@ -20,6 +24,9 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    setAppError(state, payload) {
+      state.appError = payload;
+    },
     setPokemons(state, payload) {
       state.pokemons = payload;
     },
@@ -28,19 +35,30 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    setAppError: ({ commit }, payload) => {
+      commit("setAppError", payload);
+    },
     loadPokemons: async ({ commit }) => {
       const pokeApi = new PokeApi();
-      const res = await pokeApi.getPokemons();
-      let results = res.results;
+      try {
+        const res = await pokeApi.getPokemons();
+        let results = res.results;
 
-      results = results?.map(el => ({
-        ...el,
-        id: el.url
-          .replace("https://pokeapi.co/api/v2/pokemon/", "")
-          .replace("/", "")
-      }));
+        results = results?.map(el => ({
+          ...el,
+          id: el.url
+            .replace("https://pokeapi.co/api/v2/pokemon/", "")
+            .replace("/", "")
+        }));
 
-      commit("setPokemons", results);
+        commit("setPokemons", results);
+        commit("setAppError", false);
+      } catch (e) {
+        const results = [];
+
+        commit("setPokemons", results);
+        commit("setAppError", true);
+      }
     },
     loadCollectedPokemons: async ({ commit }) => {
       const pokeCollection = new PokeColletion();
