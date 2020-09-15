@@ -5,3 +5,26 @@ $sm-viewport: 500px;
 $md-viewport: 768px;
 $lg-viewport: 992px;
 $xl-viewport: 1200px;
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  font-family: "Roboto";
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+
+  &.align-center {
+    text-align: center;
+  }
+
+  &.align-right {
+    text-align: right;
+  }
+}
